@@ -17,12 +17,12 @@ model users {
   id         String       @id @default(uuid())
   first_name String       @db.VarChar(255)
   last_name  String?      @db.VarChar(255)
-  email      String       @db.VarChar(255) @unique
+  email      String       @unique @db.VarChar(255)
   password   String       @db.VarChar(255)
   gender     enum_gender?
   image_url  String?      @db.VarChar(255)
-  createdAt  DateTime     @default(now()) @db.Timestamp()
-  updatedAt  DateTime     @updatedAt @db.Timestamp()
+  createdAt  DateTime     @default(now()) @db.DateTime(3)
+  updatedAt  DateTime     @updatedAt @db.DateTime(3)
 }
 
 enum enum_gender {
