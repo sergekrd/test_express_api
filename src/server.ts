@@ -1,12 +1,17 @@
-import express, { Request, Response } from 'express';
+import profileRouter from './routes/profile.route';
+import usersRouter from './routes/user.route';
+import express from 'express';
 
 const app = express();
 const port = 3000;
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('Привет, мир!');
-});
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use('/', usersRouter);
+app.use('/', profileRouter);
+
 
 app.listen(port, () => {
-    console.log(`Сервер запущен на http://localhost:${port}`);
+  console.log(`Сервер запущен на http://localhost:${port}`);
 });
