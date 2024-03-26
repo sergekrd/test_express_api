@@ -1,7 +1,7 @@
 import * as bcrypt from "bcrypt";
 
 export class Hasher {
-  private rounds = process.env.HASH_SALT_ROUNDS
+  private rounds = Number(process.env.HASH_SALT_ROUNDS)
   public async hashAsync(value: string): Promise<string> {
     return bcrypt.hash(value, this.rounds);
   }
@@ -14,6 +14,4 @@ export class Hasher {
     if (!value || !hashedValue) return false;
     return bcrypt.compare(value, hashedValue);
   }
-
-
 }
