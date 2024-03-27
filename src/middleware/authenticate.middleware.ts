@@ -1,20 +1,19 @@
+import { HTTP_STATUS } from '../commons/constants/statuses';
+import { CustomError } from '../commons/errors/custom.error';
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 function verifyToken(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers['authorization'] as string;
-  if (!authHeader) return res.status(403).json({ auth: false, message: 'No token provided.' });
-
+  if (!authHeader) throw new CustomError(HTTP_STATUS.FORBIDDEN, 'Нет токена в заголовке авторизации');
   const tokenParts = authHeader.split(' ');
   if (tokenParts.length !== 2 || tokenParts[0] !== 'Bearer') {
-    return res.status(401).json({ auth: false, message: 'Invalid token format.' });
+    throw new CustomError(HTTP_STATUS.UNAUTHORIZED, 'Неверный формат токена')
   }
-
   const token = tokenParts[1];
   const secret = process.env.JWT_SECRET_KEY
   jwt.verify(token, secret, function (err: any, decoded: any) {
-    if (err) return res.status(500).json({ auth: false, message: 'Failed to authenticate token.' });
-
+    if (err) throw new CustomError(HTTP_STATUS.SERVER_ERROR, 'Ошибка авторизации');
     (req as any).userId = decoded.id;
     next();
   });
