@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'test-api',
-      script: './dist/server.js',
+      script: 'ts-node src/server.ts',
 
       instances: 1,
       exec_mode: 'cluster',
