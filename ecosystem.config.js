@@ -2,11 +2,10 @@ module.exports = {
   apps: [
     {
       name: 'test-api',
-      script: 'ts-node src/server.ts',
+      script: 'tsc && node dist/server.js',
 
       instances: 1,
       exec_mode: 'fork',
-      wait_ready: true,
       listen_timeout: 10000,
 
       env: {
