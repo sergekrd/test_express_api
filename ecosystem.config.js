@@ -5,7 +5,7 @@ module.exports = {
       script: 'ts-node src/server.ts',
 
       instances: 1,
-      exec_mode: 'cluster',
+      exec_mode: 'fork',
       wait_ready: true,
       listen_timeout: 10000,
 
